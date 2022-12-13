@@ -22,7 +22,7 @@ class Color:
 def get_args():
     parser = argparse.ArgumentParser(description='Convert binary raw to different Shellcode formats')
     parser.add_argument('-f', '--file', dest='file', type=str, required=True, help='File to convert to Csharp')
-    parser.add_argument('-c', '--csharp', dest='csharp', action="store_true",default=True,
+    parser.add_argument('-c', '--csharp', dest='csharp', action="store_true",default=False,
                         help='Convert to Csharp')
     parser.add_argument('-s', '--standard', dest='standard', action="store_true", default=False,
                         help='Convert to standard Shellcode')
@@ -77,9 +77,11 @@ def convertShellcode(file,csharp,standard,fsharp,b64):
 if __name__ == '__main__':
     args = get_args()
     file = args.file
-    output = args.output
     csharp = args.csharp
     fsharp = args.fsharp
     standard = args.standard
     b64 = args.base64
+    if (b64 == False and csharp == False and fsharp == False and standard == False):
+        print (Color.BOLD+Color.RED+"You need to put one shellcode format to convert the binary")
+        exit()
     convertShellcode(readFile(file),csharp,standard,fsharp,b64)
