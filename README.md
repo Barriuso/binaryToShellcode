@@ -2,10 +2,10 @@
 Convert binary raw to different shellcode formats. Usefull to adapt to other languages like csharp, fhsarp, etc.
 
 ## Introduction
-Convert your binary in raw mode to different type of shellcodes like Csharp style. I did not found any script in python3. All the scripts were in python2.7. The hard work is done by FortyNorthSecurity. I just adaptaded.  https://github.com/FortyNorthSecurity/RandomScripts/blob/main/Cobalt%20Scripts/shellcode_formatter.py
+Convert your binary in raw mode to different type of shellcodes like Csharp style. I did not found any script in python3. All the scripts were in python2.7. The hard work is done by FortyNorthSecurity. I just adapted it.  https://github.com/FortyNorthSecurity/RandomScripts/blob/main/Cobalt%20Scripts/shellcode_formatter.py
 
 ## Usage
-usage: Convert_Binary_Csharp.py [-h] -f FILE [-c] [-s] [--fsharp] [--base64]
+usage: binaryToShellcode.py [-h] -f FILE [-c] [-s] [--fsharp] [--base64]
 
 Convert binary raw to different Shellcode formats
 
