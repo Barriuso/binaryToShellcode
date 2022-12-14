@@ -22,6 +22,7 @@ class Color:
 def get_args():
     parser = argparse.ArgumentParser(description='Convert binary raw to different Shellcode formats')
     parser.add_argument('-f', '--file', dest='file', type=str, required=True, help='File to convert to Csharp')
+    parser.add_argument('-o', '--output', dest='output', type=str,default=None, help='Name of the output file')
     parser.add_argument('-c', '--csharp', dest='csharp', action="store_true",default=False,
                         help='Convert to Csharp')
     parser.add_argument('-s', '--standard', dest='standard', action="store_true", default=False,
@@ -44,7 +45,7 @@ def writeToFile(filename,content):
     f.write(content)
     f.close()
 
-def convertShellcode(file,csharp,standard,fsharp,b64):
+def convertShellcode(file,csharp,standard,fsharp,b64,output):
     # Just raw binary blog base64 encoded
     if (b64):
         encoded_raw = base64.b64encode(file)
@@ -59,20 +60,36 @@ def convertShellcode(file,csharp,standard,fsharp,b64):
         # this is for f#
         fs_code += "0x" + hex(byte)[2:].zfill(2) + "uy;"
     if (standard):
-        print(Color.GREEN + "Your standard shellcode is in file called standard_shellcode.txt")
-        writeToFile("standard_shellcode.txt",binary_code)
+        if (output != None):
+            print(Color.GREEN + "Your standard shellcode is in file called "+output)
+            writeToFile(output, binary_code)
+        else:
+            print(Color.GREEN + "Your standard shellcode is in file called standard_shellcode.txt")
+            writeToFile("standard_shellcode.txt",binary_code)
     if (fsharp):
-        print(Color.GREEN + "Your fsharp shellcode is in file called fsharp_shellcode.txt")
-        writeToFile("fsharp_shellcode.txt", fs_code)
+        if (output != None):
+            print(Color.GREEN + "Your fsharp shellcode is in file called "+output)
+            writeToFile(output, fs_code)
+        else:
+            print(Color.GREEN + "Your fsharp shellcode is in file called fsharp_shellcode.txt")
+            writeToFile("fsharp_shellcode.txt", fs_code)
     if (csharp):
         # Convert this into a C# style shellcode format
         cs_shellcode = "0" + ",0".join(binary_code.split("\\")[1:])
-        print(Color.GREEN + "Your chsarp shellcode is in file called fsharp_shellcode.txt")
-        writeToFile("csharp_shellcode.txt",cs_shellcode)
-        # Base 64 encode the C# code (for use with certain payloads :))
-        encoded_cs = base64.b64encode(cs_shellcode.encode())
-        print(Color.GREEN + "Your chsarp shellcode is in base64 file called b64Csharp_shellcode.txt")
-        writeToFile("b64Csharp_shellcode.txt", encoded_cs.decode('ascii'))
+        if (output != None):
+            print(Color.GREEN + "Your chsarp shellcode is in file called "+output)
+            writeToFile(output, cs_shellcode)
+            # Base 64 encode the C# code (for use with certain payloads :))
+            encoded_cs = base64.b64encode(cs_shellcode.encode())
+            print(Color.GREEN + "Your chsarp shellcode is in base64 file called b64"+output)
+            writeToFile("b64"+output, encoded_cs.decode('ascii'))
+        else:
+            print(Color.GREEN + "Your chsarp shellcode is in file called fsharp_shellcode.txt")
+            writeToFile("csharp_shellcode.txt",cs_shellcode)
+            # Base 64 encode the C# code (for use with certain payloads :))
+            encoded_cs = base64.b64encode(cs_shellcode.encode())
+            print(Color.GREEN + "Your chsarp shellcode is in base64 file called b64Csharp_shellcode.txt")
+            writeToFile("b64Csharp_shellcode.txt", encoded_cs.decode('ascii'))
 
 if __name__ == '__main__':
     args = get_args()
@@ -81,7 +98,8 @@ if __name__ == '__main__':
     fsharp = args.fsharp
     standard = args.standard
     b64 = args.base64
+    output = args.output
     if (b64 == False and csharp == False and fsharp == False and standard == False):
         print (Color.BOLD+Color.RED+"You need to put one shellcode format to convert the binary")
         exit()
-    convertShellcode(readFile(file),csharp,standard,fsharp,b64)
+    convertShellcode(readFile(file),csharp,standard,fsharp,b64,output)
