@@ -6,13 +6,15 @@ Convert your binary in raw mode to different type of shellcodes like Csharp styl
 
 ## Usage
 ```
-usage: binaryToShellcode.py [-h] -f FILE [-c] [-s] [--fsharp] [--base64]
+usage: binaryToShellcode.py [-h] -f FILE [-o OUTPUT] [-c] [-s] [--fsharp] [--base64]
 
 Convert binary raw to different Shellcode formats
 
 optional arguments:
   -h, --help            show this help message and exit
   -f FILE, --file FILE  File to convert to Csharp
+  -o OUTPUT, --output OUTPUT
+                        Name of the output file
   -c, --csharp          Convert to Csharp
   -s, --standard        Convert to standard Shellcode
   --fsharp              Convert to fsharp Shellcode
